@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <title>Calculadora de Comissão</title>
+    <meta charset="UTF-8", name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Estilos para layout responsivo */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        input[type="number"] {
+            width: 80%; /* Ajuste de largura para ocupar 80% da largura da tela */
+            margin-bottom: 10px;
+            padding: 10px; /* Maior área de clique para dispositivos móveis */
+        }
+
+        button {
+            width: 45%; /* Botões ocupando 45% da largura para telas menores */
+            margin: 5px;
+            padding: 10px; /* Maior área de clique para dispositivos móveis */
+        }
+
+        img {
+            max-width: 100%; /* Garante que a imagem não exceda a largura da tela */
+            height: auto; /* Mantém a proporção da imagem */
+            margin-bottom: 20px; /* Espaçamento inferior */
+        }
+
+        @media screen and (min-width: 768px) {
+            /* Estilos para telas maiores (desktops) */
+            input[type="number"] {
+                width: 150px;
+            }
+
+            button {
+                width: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculadora de Comissão</h1>
+    <img src="imagens\Logo.jpeg" alt="Logo da Empresa" style="width: 200px; height: auto;">
+    <p>Após inserir o valor, escolha a comissão desejada</p>
+
+    <input type="number" id="inputNumber" placeholder="Insira o valor (R$)">
+    <br>
+    <button onclick="calculate('A')">A 0.4%</button>
+    <button onclick="calculate('B')">B 0.85%</button>
+    <button onclick="calculate('C')">C 1.60%</button>
+    <button onclick="calculate('D')">D 2.40%</button>
+    <button onclick="calculate('E')">E 3.20%</button>
+    <br>
+    <p id="result"></p>
+    <p id="daysInfo"></p>
+    <p id="weekendInfo"></p>
+
+    <button onclick="calculateCommission()">Calcular Comissão</button>
+    <p id="commissionResult"></p>
+
+    <button onclick="calculateDSR()">Calcular DSR</button>
+    <p id="dsrResult"></p>
+
+    <script>
+        function calculate(value) {
+            let input = parseFloat(document.getElementById('inputNumber').value);
+            let result = 0;
+
+            switch (value) {
+                case 'A':
+                    result = input * 0.004;
+                    break;
+                case 'B':
+                    result = input * 0.0085;
+                    break;
+                case 'C':
+                    result = input * 0.016;
+                    break;
+                case 'D':
+                    result = input * 0.024;
+                    break;
+                case 'E':
+                    result = input * 0.032;
+                    break;
+                default:
+                    result = "Erro";
+            }
+
+            result = formatAsCurrency(result);
+            document.getElementById('result').innerHTML = `Valor Total: ${result}`;
+
+            displayDaysInfo();
+            displayWeekendInfo();
+        }
+
+        function formatAsCurrency(value) {
+            return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+
+        function displayDaysInfo() {
+            let today = new Date();
+            let year = today.getFullYear();
+            let month = today.getMonth() + 1;
+            let totalDays = new Date(year, month, 0).getDate();
+            let workingDays = 0;
+
+            for (let i = 1; i <= totalDays; i++) {
+                let currentDate = new Date(year, month - 1, i);
+                if (currentDate.getDay() !== 0 && currentDate.getDay() !== 7) {
+                    workingDays++;
+                }
+            }
+
+            let currentDate = today.getDate();
+            let passedWorkingDays = 0;
+
+            for (let i = 1; i <= currentDate; i++) {
+                let currentDate = new Date(year, month - 1, i);
+                if (currentDate.getDay() !== 0 && currentDate.getDay() !== 7) {
+                    passedWorkingDays++;
+                }
+            }
+
+            let percentage = (passedWorkingDays / workingDays * 100).toFixed(2);
+
+            let monthText = `${today.toLocaleString('default', { month: 'long' })} de ${year}`;
+            let daysInfo = `Mês atual: ${monthText}<br>Dias úteis: ${workingDays}, Dias Passados: ${passedWorkingDays} (${percentage}%)`;
+
+            document.getElementById('daysInfo').innerHTML = daysInfo;
+        }
+
+        function displayWeekendInfo() {
+            let today = new Date();
+            let year = today.getFullYear();
+            let month = today.getMonth() + 1;
+            let totalDays = new Date(year, month, 0).getDate();
+            let weekendDays = 0;
+
+            for (let i = 1; i <= totalDays; i++) {
+                let currentDate = new Date(year, month - 1, i);
+                if (currentDate.getDay() === 0 || currentDate.getDay() === 7) {
+                    weekendDays++;
+                }
+            }
+
+            let currentDate = today.getDate();
+            let passedWeekendDays = 0;
+
+            for (let i = 1; i <= currentDate; i++) {
+                let currentDate = new Date(year, month - 1, i);
+                if (currentDate.getDay() === 0 || currentDate.getDay() === 7) {
+                    passedWeekendDays++;
+                }
+            }
+
+            let percentage = (passedWeekendDays / weekendDays * 100).toFixed(2);
+
+            let monthText = `${today.toLocaleString('default', { month: 'long' })} de ${year}`;
+            let weekendInfo = `Finais de semana: ${weekendDays}, Dias Passados: ${passedWeekendDays} (${percentage}%)`;
+
+            document.getElementById('weekendInfo').innerHTML = weekendInfo;
+        }
+
+        function calculateCommission() {
+            let result = parseFloat(document.getElementById('result').innerText.replace('Valor Total: ', '').replace('R$', '').replace('.', '').replace(',', '.').trim());
+            let workingDaysInfo = document.getElementById('daysInfo').innerHTML;
+
+            let workingDays = parseInt(workingDaysInfo.split('Dias úteis: ')[1].split(',')[0]);
+
+            let commission = (result / (new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate())) * workingDays;
+            document.getElementById('commissionResult').innerHTML = `Comissão: ${formatAsCurrency(commission)}`;
+        }
+
+        function calculateDSR() {
+            let result = parseFloat(document.getElementById('result').innerText.replace('Valor Total: ', '').replace('R$', '').replace('.', '').replace(',', '.').trim());
+            let workingDaysInfo = document.getElementById('daysInfo').innerHTML;
+            let weekendInfo = document.getElementById('weekendInfo').innerHTML;
+
+            let workingDays = parseInt(workingDaysInfo.split('Dias úteis: ')[1].split(',')[0]);
+            let weekendDays = parseInt(weekendInfo.split('Finais de semana: ')[1].split(',')[0]);
+
+            let DSR = (result / (new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate())) * weekendDays;
+
+            document.getElementById('dsrResult').innerHTML = `DSR: ${formatAsCurrency(DSR)}`;
+        }
+
+        displayDaysInfo();
+        displayWeekendInfo();
+    </script>
+</body>
+</html>
