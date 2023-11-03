@@ -11,32 +11,10 @@
         img {
             max-width: 100%; /* A imagem se ajustará automaticamente ao tamanho do contêiner */
             height: auto;
-            max-width: 300px; /* Define um tamanho máximo para a largura da imagem */
+            max-width: 400px; /* Define um tamanho máximo para a largura da imagem */
         }
 
-        /* Layout responsivo para as seções de entrada */
-        div {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 10px;
-        }
-
-        input, button, p {
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
-
-        @media only screen and (min-width: 600px) {
-            /* Estilos específicos para telas maiores (a largura mínima é de 600px, ajuste conforme necessário) */
-            div {
-                flex-direction: row;
-                align-items: center;
-            }
-
-            input, button, p {
-                margin: 0 10px; /* Ajuste os espaçamentos conforme necessário */
-            }
-        }
+        /* Restante dos estilos permanece inalterado */
     </style>
 
     <script>
@@ -96,49 +74,53 @@
             document.getElementById("totalVendas").innerHTML = "Total de Vendas: R$ " + valorTotal.toFixed(2);
             document.getElementById("totalComissoes").innerHTML = "Total de Comissões: R$ " + (comissoes.reduce((a, b) => a + b, 0)).toFixed(2);
         }
+        function preencherCamposComZero() {
+            for (var i = 1; i <= 5; i++) {
+                document.getElementById("venda_" + i).value = 0;
+                calcularComissao(i);
+            }
+        }
+
+        // Chame a função para preencher os campos com zero quando a página carregar
+        window.onload = preencherCamposComZero;
     </script>
 </head>
 
 <body>
-    <img src="/Logo.png" alt="Logo da Empresa">
+    <img src="/src/assets/Logo.png" alt="Logo da Empresa">
     <h2>Simulador de Comissões</h2>
-
+    <p>Atenção, preencha os campos abaixo com valores. Os cálculos serão feitos automaticamente.</p>
+    <br>
     <div>
         <label>Classe A (0,40%)</label>
-        <input type="number" id="venda_1">
-        <button onclick="calcularComissao(1)">Calcular</button>
+        <input type="number" id="venda_1" oninput="calcularComissao(1)">
         <p id="comissao_1">Valor da Comissão: </p>
     </div>
 
     <div>
         <label>Classe B (0,85%)</label>
-        <input type="number" id="venda_2">
-        <button onclick="calcularComissao(2)">Calcular</button>
+        <input type="number" id="venda_2" oninput="calcularComissao(2)">
         <p id="comissao_2">Valor da Comissão: </p>
     </div>
 
     <div>
         <label>Classe C (1,60%)</label>
-        <input type="number" id="venda_3">
-        <button onclick="calcularComissao(3)">Calcular</button>
+        <input type="number" id="venda_3" oninput="calcularComissao(3)">
         <p id="comissao_3">Valor da Comissão: </p>
     </div>
 
     <div>
         <label>Classe D (2,40%)</label>
-        <input type="number" id="venda_4">
-        <button onclick="calcularComissao(4)">Calcular</button>
+        <input type="number" id="venda_4" oninput="calcularComissao(4)">
         <p id="comissao_4">Valor da Comissão: </p>
     </div>
 
     <div>
         <label>Classe E (3,20%)</label>
-        <input type="number" id="venda_5">
-        <button onclick="calcularComissao(5)">Calcular</button>
+        <input type="number" id="venda_5" oninput="calcularComissao(5)">
         <p id="comissao_5">Valor da Comissão: </p>
     </div>
 
-    <h3>Valor Total</h3>
     <button onclick="calcularTotal()">Calcular Totais</button>
     <p id="totalVendas">Total de Vendas: R$ 0.00</p>
     <p id="totalComissoes">Total de Comissões: R$ 0.00</p>
