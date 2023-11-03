@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 
 <head>
-    <title>Calculadora de Comissões</title>
+    <title>Simulador de Comissões CCN</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,15 +11,33 @@
         img {
             max-width: 100%; /* A imagem se ajustará automaticamente ao tamanho do contêiner */
             height: auto;
-            max-width: 450px; /* Define um tamanho máximo para a largura da imagem */
+            max-width: 350px; /* Define um tamanho máximo para a largura da imagem */
         }
 
         /* Estilos para adicionar contornos */
         .comissao {
-            border: 1px solid #ff7300; /* Adiciona uma borda cinza ao redor de cada seção de comissão */
-            padding: 5px; /* Adiciona espaço interno para melhorar a visualização */
-            margin-bottom:3px; /* Adiciona espaço entre cada seção de comissão */
-            line-height: 0; /* Espaço entre cada seção de comissão */
+            border: 1px solid #00255A; /* Cor da borda ao redor de cada seção de comissão */
+            padding: 5px; /* Espaço interno */
+            margin-bottom:0px; /* Espaço entre cada seção de comissão */
+            line-height: 1; /* Espaço entre cada seção de comissão */
+            margin-top: 0; /* Margem Acima */
+        }
+        p {
+        line-height: 0.5; /* Espaço entre as linhas nos parágrafos */
+        margin-bottom:0.5px; /* Margem Abaixo */
+        margin-top: 0.5; /* Margem Acima */
+        }
+        button {
+        margin-top: 5px; /* Espaço acima do botão */
+        }
+        #totalVendas, #totalComissoes {
+        font-weight: bold; /* Deixa o texto em negrito */
+        }
+        h2 {
+        text-align: left; /* Centraliza o texto */
+        margin-top: 5px; /* Espaçamento acima dos títulos */
+        margin-bottom: 3px; /* Espaçamento abaixo dos títulos */
+        font-size: 20px;
         }
     </style>
 
@@ -108,8 +126,9 @@
 
 <body>
     <img src="https://sat02pap003files.storage.live.com/y4mlgKov-8pJsUPnmVw2HI5xZtJ4ijZDakaV7PecO8l-MQc8sG-sXC0iwye1UH61MO5iQFyA2pKVA50IO7_g6ozKF14K4PCgHvXE8sHs5eeeQSO3Wvb9KXA1QT2nomDvbgx7ByzXXcgAss25_rsef3c9bRzHy1qxMcl5ud9Qyqco1k36a33oztGd8GzwO5Aa9QI?encodeFailures=1&width=1910&height=464" alt="Logo da Empresa">
-    <h2>Simulador de Comissões</h2>
-    <p>Atenção, preencha os campos abaixo com valores. Os cálculos serão feitos automaticamente.</p>
+    <h2>Simulador de Comissões de Vendas CCN</h2>
+    <p>Atenção, preencha os campos abaixo com valores.</p>
+    <p>Os cálculos serão feitos automaticamente.</p>
     <br>
 
     <div class="comissao">
@@ -142,7 +161,7 @@
         <p id="comissao_5"> Valor da Comissão: </p>
     </div>
 
-    <button onclick="calcularTotal()">Calcular Totais</button>
+    <button onclick="calcularTotal()">Calcular Comissão Total</button>
     <p id="totalVendas">Total de Vendas: R$ 0.00</p>
     <p id="totalComissoes">Total de Comissões: R$ 0.00</p>
 </body>
