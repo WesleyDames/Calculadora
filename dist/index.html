@@ -14,7 +14,12 @@
             max-width: 450px; /* Define um tamanho máximo para a largura da imagem */
         }
 
-        /* Restante dos estilos permanece inalterado */
+        /* Estilos para adicionar contornos */
+        .comissao {
+            border: 1px solid #ff7300; /* Adiciona uma borda cinza ao redor de cada seção de comissão */
+            padding: 10px; /* Adiciona espaço interno para melhorar a visualização */
+            margin-bottom: 10px; /* Adiciona espaço entre cada seção de comissão */
+        }
     </style>
 
     <script>
@@ -105,34 +110,35 @@
     <h2>Simulador de Comissões</h2>
     <p>Atenção, preencha os campos abaixo com valores. Os cálculos serão feitos automaticamente.</p>
     <br>
-    <div>
+
+    <div class="comissao">
         <label>Classe A (0,40%)</label>
         <input type="number" id="venda_1" oninput="calcularComissao(1)">
         <p id="comissao_1"> Valor da Comissão: </p>
     </div>
 
-    <div>
+    <div class="comissao">
         <label>Classe B (0,85%)</label>
         <input type="number" id="venda_2" oninput="calcularComissao(2)">
         <p id="comissao_2"> Valor da Comissão: </p>
     </div>
 
-    <div>
+    <div class="comissao">
         <label>Classe C (1,60%)</label>
         <input type="number" id="venda_3" oninput="calcularComissao(3)">
         <p id="comissao_3"> Valor da Comissão: </p>
     </div>
 
-    <div>
+    <div class="comissao">
         <label>Classe D (2,40%)</label>
         <input type="number" id="venda_4" oninput="calcularComissao(4)">
         <p id="comissao_4"> Valor da Comissão: </p>
     </div>
 
-    <div>
+    <div class="comissao">
         <label>Classe E (3,20%)</label>
         <input type="number" id="venda_5" oninput="calcularComissao(5)">
-        <p id="comissao_5">Valor da Comissão: </p>
+        <p id="comissao_5"> Valor da Comissão: </p>
     </div>
 
     <button onclick="calcularTotal()">Calcular Totais</button>
